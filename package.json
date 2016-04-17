@@ -12,17 +12,21 @@
     "gulp-autoprefixer": "^3.0.1",
     "gulp-babel": "^6.1.1",
     "gulp-cache": "^0.4.2",
+    "gulp-concat": "^2.6.0",
     "gulp-cssnano": "^2.0.0",
     "gulp-eslint": "^0.13.2",
+    "gulp-file-contents-to-json": "^0.2.0",
     "gulp-htmlmin": "^1.3.0",
     "gulp-if": "^1.2.5",
     "gulp-imagemin": "^2.2.1",
+    "gulp-insert": "^0.5.0",
     "gulp-load-plugins": "^0.10.0",
     "gulp-plumber": "^1.0.1",
     "gulp-size": "^1.2.1",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-uglify": "^1.1.0",
     "gulp-useref": "^3.0.0",
+    "gulp-util": "^3.0.7",
     "main-bower-files": "^2.5.0",
     "wiredep": "^2.2.2"
   },
@@ -30,9 +34,18 @@
     "env": {
       "es6": true,
       "node": true,
+      "jquery": true,
       "browser": true
     },
+    "globals": {
+        "Backbone": true,
+        "JST": true,
+        "_": true,
+        "app": true
+    },
     "rules": {
+      "no-alert":1,
+      "no-new":1,
       "quotes": [
         2,
         "single"
