@@ -1,0 +1,29 @@
+{
+  "name": "forumbb",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "backbone": "^1.3.3",
+    "backbone.localStorage": "backbone.localstorage#^1.1.16",
+    "font-awesome": "fontawesome#^4.6.1"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js",
+        "dist/fonts/*"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "./fonts/*"
+      ]
+    }
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
