@@ -1,16 +1,16 @@
-window.app = {
+'use strict';
+
+var app = app || {
   Models: {},
   Collections: {},
   Views: {},
   Routers: {},
   init: function() {
-    'use strict';
-    console.log('app.init');
-    new app.Views.AppView();
+    var appView = new app.Views.AppView();
+    appView.render();
   }
 };
 
 $(function() {
-  'use strict';
   app.init();
 });

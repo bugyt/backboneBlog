@@ -1,28 +1,23 @@
-/*global app, Backbone, JST*/
-
-app.Views = app.Views || {};
-
 (function() {
   'use strict';
 
   app.Views.Post = Backbone.View.extend({
 
-    //template: JST.get('AppView'),
+    template: _.template(JST.post),
 
-    tagName: 'div',
-
-    id: '',
-
-    className: '',
+    //tagName: 'li',
 
     events: {},
 
     initialize: function() {
-      this.listenTo(this.model, 'change', this.render);
+      //this.listenTo(this.model, 'change', this.render);
     },
 
     render: function() {
+      console.log(this.model);
       this.$el.html(this.template(this.model.toJSON()));
+      console.log(this.$el.html());
+      return this;
     }
 
   });

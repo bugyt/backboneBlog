@@ -42,12 +42,19 @@ gulp.task('templates', () => {
   .pipe($.htmlmin({
       collapseWhitespace: true
     }))
+    .on('error', function(err) {
+      console.log(err.toString());
+      this.emit('end');
+    })
     .pipe(fc2json('templates.js', {
       extname : false,
       flat : true,
     }))
     .pipe($.insert.prepend('window.JST = '))
     .pipe(gulp.dest('.tmp/scripts'))
+    .pipe(reload({
+      stream: true
+    }));
 });
 
 function lint(files, options) {
@@ -136,6 +143,7 @@ gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
 
   gulp.watch('app/styles/**/*.css', ['styles']);
   gulp.watch('app/scripts/**/*.js', ['scripts']);
+  gulp.watch('app/scripts/**/*.ejs', ['templates']);
   gulp.watch('app/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });

@@ -38,14 +38,15 @@
       "browser": true
     },
     "globals": {
-        "Backbone": true,
-        "JST": true,
-        "_": true,
-        "app": true
+      "Backbone": true,
+      "JST": true,
+      "_": true,
+      "app": true
     },
     "rules": {
-      "no-alert":1,
-      "no-new":1,
+      "no-alert": 1,
+      "no-unused-vars": 1,
+      "no-new": 1,
       "quotes": [
         2,
         "single"

@@ -32,7 +32,7 @@
   <![endif]-->
 
   <div class="container">
-    <div class="header">
+    <div class="header row">
       <ul class="nav nav-pills pull-right">
         <li class="active">
           <a href="#">Home</a>
@@ -47,44 +47,12 @@
       <h3 class="text-muted">forumbb</h3>
     </div>
 
-    <div class="jumbotron">
-      <h1> <i class="fa fa-camera-retro fa-2x"></i>
-        'Allo, 'Allo!
-      </h1>
-      <p class="lead">Always a pleasure scaffolding your apps.</p>
-      <p>
-        <a class="btn btn-lg btn-success" href="#">Splendid!</a>
-      </p>
-    </div>
+    <div id="main" class="row"></div>
 
-    <div class="row marketing">
-      <div class="col-lg-6">
-        <h4>HTML5 Boilerplate</h4>
-        <p>
-          HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-        </p>
-
-        <h4>Bootstrap</h4>
-        <p>
-          Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.
-        </p>
-      </div>
-    </div>
-
-    <div class="footer">
+    <div class="footer row">
       <p>♥ from the Yeoman team</p>
     </div>
   </div>
-
-  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-  <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='https://www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
 
   <!-- build:js scripts/vendor.js -->
   <!-- bower:js -->
@@ -115,8 +83,10 @@
   <script src="scripts/main.js"></script>
   <script src="scripts/models/post.js"></script>
   <script src="scripts/collections/posts.js"></script>
-  <script src="scripts/views/AppView.js"></script>
   <script src="scripts/views/post.js"></script>
+  <script src="scripts/views/postForm.js"></script>
+  <script src="scripts/views/app.js"></script>
+  <script src="scripts/routes/admin.js"></script>
   <!-- endbuild -->
 </body>
 </html>
