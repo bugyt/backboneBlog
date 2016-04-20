@@ -1,6 +1,6 @@
 'use strict';
 
-var app = app || {
+var app = {
   Models: {},
   Collections: {},
   Views: {},
@@ -12,9 +12,11 @@ var app = app || {
     Backbone.history.start();
   }
 };
-// window.onerror = function(error) {
-//     alert(error);
-// };
+
+window.onerror = function(error) {
+  alert(error);
+};
+
 $(function() {
   app.init();
 });
