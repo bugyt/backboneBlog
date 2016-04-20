@@ -1,23 +1,33 @@
+'use strict';
+
 (function() {
-  'use strict';
+
 
   app.Views.Post = Backbone.View.extend({
 
     template: _.template(JST.post),
 
-    //tagName: 'li',
-
-    events: {},
+    events: {
+      'click .destroy': 'clear'
+    },
 
     initialize: function() {
-      //this.listenTo(this.model, 'change', this.render);
+      this.listenTo(this.model, 'destroy', this.remove);
+      this.render();
+
     },
 
     render: function() {
-      console.log(this.model);
-      this.$el.html(this.template(this.model.toJSON()));
-      console.log(this.$el.html());
+
+      this.setElement(this.template(this.model.toJSON()));
+
       return this;
+
+    },
+
+    // Remove the item, destroy the model from *localStorage* and delete its view.
+    clear: function () {
+      this.model.destroy();
     }
 
   });

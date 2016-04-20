@@ -31,20 +31,20 @@
   </p>
   <![endif]-->
 
-  <div class="container">
+  <div class="container" id="app">
     <div class="header row">
       <ul class="nav nav-pills pull-right">
         <li class="active">
           <a href="#">Home</a>
         </li>
         <li>
-          <a href="#">About</a>
+          <a href="#/admin">Admin</a>
         </li>
         <li>
           <a href="#">Contact</a>
         </li>
       </ul>
-      <h3 class="text-muted">forumbb</h3>
+      <h1 class="text-muted">forumbb</h1>
     </div>
 
     <div id="main" class="row"></div>
@@ -81,12 +81,14 @@
   <!-- build:js scripts/main.js -->
   <script src="scripts/templates.js"></script>
   <script src="scripts/main.js"></script>
+  <script src="scripts/helpers.js"></script>
   <script src="scripts/models/post.js"></script>
   <script src="scripts/collections/posts.js"></script>
   <script src="scripts/views/post.js"></script>
+  <script src="scripts/views/postsList.js"></script>
   <script src="scripts/views/postForm.js"></script>
   <script src="scripts/views/app.js"></script>
-  <script src="scripts/routes/admin.js"></script>
+  <script src="scripts/routes/routes.js"></script>
   <!-- endbuild -->
 </body>
 </html>

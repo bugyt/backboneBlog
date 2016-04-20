@@ -9,6 +9,9 @@
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.4em;
+  background: #eaeaea url('/images/bg.png');
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -79,11 +82,67 @@ body {
 
   /* Space out the masthead */
   .header {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
   }
 
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+.postsList li .destroy {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  margin: auto 0;
+  font-size: 30px;
+  color: #cc9a9a;
+  margin-bottom: 11px;
+  transition: color 0.2s ease-out;
+}
+
+.postsList li .destroy:hover {
+  color: #af5b5e;
+}
+
+.postsList li {
+    position: relative;
+}
+.postsList li .destroy:after {
+  content: '×';
+}
+
+.postsList li:hover .destroy {
+  display: block;
+}
+
+#main {
+  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
+  /* margin: 130px 0 40px 0; */
+  border: 1px solid #ccc;
+  position: relative;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.15);
+  padding: 20px;
+}
+
+#app h1 {
+    line-height: 0;
+    font-size: 70px;
+    font-weight: bold;
+    color: #b3b3b3;
+    color: rgba(255, 255, 255, 0.3);
+    text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
+    -webkit-text-rendering: optimizeLegibility;
+    -moz-text-rendering: optimizeLegibility;
+    -ms-text-rendering: optimizeLegibility;
+    -o-text-rendering: optimizeLegibility;
+    text-rendering: optimizeLegibility;
 }

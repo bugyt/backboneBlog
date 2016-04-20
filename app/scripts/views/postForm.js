@@ -1,40 +1,44 @@
+ 'use strict';
+
 (function() {
-  'use strict';
 
-  app.Views.PostForm = Backbone.View.extend({
+ app.Views.PostForm = Backbone.View.extend({
 
-    template: _.template(JST.postForm),
+   template: _.template(JST.postForm),
 
-    events: {
-      'click #submit': 'createPost'
-    },
+   title: 'Post form',
 
-    initialize: function() {
-    },
+   events: {
+     'click #submit': 'createPost'
+   },
 
-    render: function() {
-      var html = this.template();
-      this.setElement(html);
-      return this;
-    },
+   initialize: function() {
+     this.render();
+   },
 
-    newAttributes: function() {
-      return {
-        title: this.$('#title').val().trim(),
-        content: this.$('#content').val().trim(),
-        date: _.now()
-      };
-    },
+   render: function() {
+     var html = this.template();
+     this.setElement(html);
+     return this;
+   },
 
-    createPost: function(e) {
-      e.preventDefault();
-      app.Collections.Posts.create(this.newAttributes());
-      this.$('#title').val('');
-      this.$('#content').val('');
-      console.log('save ' + app.Collections.Posts.length);
-    }
+   newAttributes: function() {
+     return {
+       title: this.$('#title').val().trim(),
+       content: this.$('#content').val().trim(),
+       date: _.now()
+     };
+   },
+
+   createPost: function(e) {
+     e.preventDefault();
+     app.Collections.Posts.create(this.newAttributes());
+     this.$('#title').val('');
+     this.$('#content').val('');
+     console.log('save ' + app.Collections.Posts.length);
+   }
 
 
-  });
+ });
 
 })();

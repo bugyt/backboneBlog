@@ -45,6 +45,7 @@
     },
     "rules": {
       "no-alert": 1,
+      "eol-last": 0,
       "no-unused-vars": 1,
       "no-new": 1,
       "quotes": [

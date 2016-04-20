@@ -1,41 +1,27 @@
+'use strict';
+
 (function() {
-  'use strict';
 
-  app.Views.AppView = Backbone.View.extend({
+  app.Views.App = Backbone.View.extend({
 
-    el: '#main',
+    el: '#app',
 
-    template: _.template(JST.app),
+    events: {
+      'click .nav li': 'navActive'
+    },
 
     initialize: function() {
-      this.listenTo(app.Collections.Posts, 'sync', this.render);
+      app.Collections.Posts.fetch();
     },
 
-    render: function() {
-
-      this.$el.html(this.template({
-        test: 'test'
-      }));
-      var $list = this.$('#postsList').empty();
-      app.Collections.Posts.each(function(model) {
-        var item = new app.Views.Post({model: model});
-        $list.append(item.render().$el);
-        console.log(model.get('id'));
-      });
-      var postForm = new app.Views.PostForm();
-      this.$el.append(postForm.render().$el);
-
-      return this;
+    render: function(subView) {
+      this.$('#main').html(app.Helpers.ViewManager.showView(subView).$el);
+      this.$('#main').prepend('<h2>' + subView.title + '</h2>');
     },
 
-    test: function() {
-
-      console.log('app.Views.AppView');
-
-      alert('click');
-
+    navActive: function(e) {
+      $(e.currentTarget).addClass('active').siblings().removeClass('active');
     }
-
 
   });
 

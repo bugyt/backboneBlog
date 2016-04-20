@@ -5,12 +5,16 @@ var app = app || {
   Collections: {},
   Views: {},
   Routers: {},
+  Helpers: {},
   init: function() {
-    var appView = new app.Views.AppView();
-    appView.render();
+    app.mainView = app.mainView || new app.Views.App();
+    app.mainRouter = app.mainRouter || new app.Routers();
+    Backbone.history.start();
   }
 };
-
+// window.onerror = function(error) {
+//     alert(error);
+// };
 $(function() {
   app.init();
 });
