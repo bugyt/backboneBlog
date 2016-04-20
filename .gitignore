@@ -4,4 +4,4 @@ dist
 .sass-cache
 bower_components
 test/bower_components
-app/scripts/collections/posts.js
+app/scripts/collections/#posts.js
