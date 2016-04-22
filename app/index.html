@@ -12,6 +12,8 @@
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/bower_components/highlightjs/styles/atelier-savanna.light.css" />
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -43,10 +45,12 @@
           <a href="#">Contact</a>
         </li>
       </ul>
-      <h1 class="text-muted">forumbb</h1>
+      <h1 class="text-muted title">forumbb</h1>
     </div>
 
-    <div id="main" class="row"></div>
+    <div id="main" class="row"> 
+      <h4><i class="fa fa-spinner fa-pulse fa-lg fa-fw margin-bottom"></i> Loading...</h4>
+    </div>
 
     <div class="footer row">
       <p>♥ from the Yeoman team</p>
@@ -59,6 +63,8 @@
   <script src="/bower_components/underscore/underscore.js"></script>
   <script src="/bower_components/backbone/backbone.js"></script>
   <script src="/bower_components/backbone.localStorage/backbone.localStorage.js"></script>
+  <script src="/bower_components/marked/lib/marked.js"></script>
+  <script src="/bower_components/highlightjs/highlight.pack.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -80,12 +86,14 @@
   <!-- build:js scripts/main.js -->
   <script src="scripts/templates.js"></script>
   <script src="scripts/main.js"></script>
-  <script src="scripts/helpers.js"></script>
+  <script src="scripts/lib/helpers.js"></script>
+  <script src="scripts/lib/prototype.js"></script>
   <script src="scripts/models/post.js"></script>
   <script src="scripts/collections/posts.js"></script>
-  <script src="scripts/views/post.js"></script>
+  <script src="scripts/views/postPreview.js"></script>
   <script src="scripts/views/postsList.js"></script>
   <script src="scripts/views/postForm.js"></script>
+  <script src="scripts/views/post.js"></script>
   <script src="scripts/views/app.js"></script>
   <script src="scripts/routes/routes.js"></script>
   <!-- endbuild -->

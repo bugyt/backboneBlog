@@ -13,6 +13,7 @@
     initialize: function() {
 
       this.listenTo(app.Collections.Posts, 'sync', this.render);
+      app.Collections.Posts.fetch();
       this.render();
 
     },
@@ -23,7 +24,7 @@
 
       app.Collections.Posts.each(function(model) {
 
-        var item = new app.Views.Post({
+        var item = new app.Views.PostPreview({
           model: model
         });
 
@@ -31,9 +32,10 @@
 
       });
 
+      // var postForm = new app.Views.PostForm();
+      // this.$el.append(postForm.render().$el);
       return this;
     }
-
   });
 
 })();

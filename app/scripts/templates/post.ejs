@@ -1,6 +1,8 @@
-  <li>    <h3><%= title %><small><%= _id %></small></h3>
-  <p><%= content %></p>
-  <button class="destroy"></button>
+<li>
+  <h3><%= title %></h3>
+  <% if (typeof(_id) !== "undefined") { %>
+  <small><%= _id %></small>
+  <% } %>
+  <div id="content"></div>
   <p><%= date %></p>
-  </li>
-
+</li>

@@ -41,7 +41,9 @@
       "Backbone": true,
       "JST": true,
       "_": true,
-      "app": true
+      "app": true,
+      "hljs": true,
+      "marked": true
     },
     "rules": {
       "no-alert": 1,
@@ -53,5 +55,6 @@
         "single"
       ]
     }
-  }
+  },
+  "dependencies": {}
 }

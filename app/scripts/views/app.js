@@ -11,7 +11,7 @@
     },
 
     initialize: function() {
-      app.Collections.Posts.fetch();
+
     },
 
     render: function(subView) {

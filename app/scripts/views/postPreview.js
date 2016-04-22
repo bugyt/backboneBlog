@@ -3,22 +3,23 @@
 (function() {
 
 
-  app.Views.Post = Backbone.View.extend({
+  app.Views.PostPreview = Backbone.View.extend({
 
-    template: _.template(JST.post),
-    title: 'Post',
+    template: _.template(JST.postPreview),
 
+    events: {
+      'click .destroy': 'clear'
+    },
 
     initialize: function() {
+      this.listenTo(this.model, 'destroy', this.remove);
       this.listenTo(this.model, 'sync', this.render);
       this.render();
-
     },
 
     render: function() {
-      console.log(this.model.get('content'));
+      this.model.set('dateFormat', new Date(this.model.get('date')));
       this.setElement(this.template(this.model.toJSON()));
-      this.$('#content').html(marked(this.model.get('content')));
 
       return this;
 
