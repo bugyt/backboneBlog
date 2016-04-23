@@ -12,9 +12,18 @@
 
     initialize: function() {
 
+      var self = this;
+
       this.listenTo(app.Collections.Posts, 'sync', this.render);
-      app.Collections.Posts.fetch();
-      this.render();
+
+      app.Collections.Posts.fetch({
+      success: function(collection, response, options) {
+        self.render();
+      },
+      error: function(err) {
+        console.log('error callback : ' + err);
+      }
+    });
 
     },
 

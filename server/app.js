@@ -1,5 +1,6 @@
 'use strict';
 
+// Node modules loading
 var express = require('express');
 var posts = require('./routes/posts');
 var logger = require('morgan');
@@ -11,7 +12,12 @@ var app = express();
 
 // CORS middleware
 var allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://163.172.131.193:9000');
+  var allowedOrigins = ['http://163.172.131.193:9000', 'http://localhost:9000', 'http://127.0.0.1:9000', 'http://dev.laurenth.fr'];
+  var origin = req.headers.origin;
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  //res.header('Access-Control-Allow-Origin', 'http://163.172.131.193:9000');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 

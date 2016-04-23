@@ -15,17 +15,16 @@
     },
 
     admin: function() {
-      var postForm = new app.Views.PostForm();
-      app.mainView.render(postForm);
+      var AdminView = new app.Views.Admin();
+      app.mainView.render(AdminView);
     },
     home: function() {
       var postsList = new app.Views.PostsList();
       app.mainView.render(postsList);
     },
-    post: function(id) {
-      console.log('post')
+    post: function(slug) {
       //app.Collections.Posts.idLookup(id).then(function(model) {
-      app.Collections.Posts.propLookup('title', 'Lorem Ipsum').then(function(model) {
+      app.Collections.Posts.propLookup('slug', slug).then(function(model) {
         var postView = new app.Views.Post({
           model: model
         });

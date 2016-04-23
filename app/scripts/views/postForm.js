@@ -6,7 +6,7 @@
 
      template: _.template(JST.postForm),
 
-     title: 'Post form',
+     title: 'Add a post',
 
      events: {
        'click button[type="submit"]': 'createPost',
@@ -29,9 +29,12 @@
      },
 
      newAttributes: function() {
+      console.log('eeeee' + this.$('.slug input').val());
        return {
+
          title: this.$('#title').val().trim(),
          content: this.$('#content').val().trim(),
+         slug: this.$('.slug input').val().trim(),
          date: _.now()
        };
      },
@@ -54,9 +57,7 @@
            console.log('error callback : ' + err);
          }
        });
-       this.$('#title').val('');
-       this.$('#content').val('');
-       this.validPost();
+     // this.clear();
      },
 
      validPost: function() {
@@ -66,17 +67,18 @@
      },
 
      clear: function() {
-       this.$('#title').parents('.form-group').removeClass('has-error');
-       this.$('#title').siblings('.glyphicon').removeClass('glyphicon-remove');
-       this.$('#content').parents('.form-group').removeClass('has-error');
-       this.$('#content').siblings('.glyphicon').removeClass('glyphicon-remove');
+       this.$el.find('input[type=text], textarea').val('');
+       this.$('.slug label:not(.control-label)').text('');
+       this.validPost();
      },
 
      convertToSlug: function(e) {
        var target = $(e.target);
-       var text = app.Helpers.convertToSlug(target.val());
-       this.$('input.slug, label.slug').text(text);
-       this.$('input.slug').val(text);
+       var text = app.Helpers.slugify(target.val());
+       this.$('.slug label:not(.control-label)').text(text);
+       console.log(this.$('.slug input'));
+       this.$('.slug input').val(text);
+       console.log(this.$('.slug input').val());
      }
 
    });

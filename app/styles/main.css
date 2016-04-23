@@ -145,3 +145,14 @@ body {
     -o-text-rendering: optimizeLegibility;
     text-rendering: optimizeLegibility;
 }
+
+.form-group label {
+  padding-top: 7px;
+}
+.slug .glyphicon {
+ margin-top: -27px; 
+}
+
+form {
+  padding: 10px;
+}
