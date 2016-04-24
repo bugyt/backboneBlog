@@ -12,7 +12,6 @@
     var deferred = new $.Deferred();
 
     if (model) {
-      console.log('trouv"');
       deferred.resolve(model);
     } else {
       model = new app.Models.Post(query);

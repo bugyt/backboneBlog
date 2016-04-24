@@ -29,7 +29,7 @@
      },
 
      newAttributes: function() {
-      console.log('eeeee' + this.$('.slug input').val());
+       console.log('eeeee' + this.$('.slug input').val());
        return {
 
          title: this.$('#title').val().trim(),
@@ -51,13 +51,16 @@
            model.set({
              _id: res.insertedIds[0]
            });
-
+           $.notify('Success ! Post added.', {
+             className: 'success',
+             style: 'bootstrap'
+           });
          },
          error: function(err) {
            console.log('error callback : ' + err);
          }
        });
-     // this.clear();
+       this.clear();
      },
 
      validPost: function() {

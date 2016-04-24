@@ -17,6 +17,7 @@
     render: function(subView) {
       this.$('#main').html(app.Helpers.ViewManager.showView(subView).$el);
       this.$('#main').prepend('<h2>' + subView.title + '</h2>');
+      //app.Helpers.notifyMe(subView.title);
     },
 
     navActive: function(e) {

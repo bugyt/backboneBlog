@@ -7,7 +7,8 @@
     routes: {
       '': 'home',
       'admin': 'admin',
-      'post/:id': 'post'
+      'post/:slug': 'showPost',
+      'post/edit/:id': 'editPost'
     },
 
     initialize: function() {
@@ -18,21 +19,29 @@
       var AdminView = new app.Views.Admin();
       app.mainView.render(AdminView);
     },
+
     home: function() {
       var postsList = new app.Views.PostsList();
       app.mainView.render(postsList);
     },
-    post: function(slug) {
-      //app.Collections.Posts.idLookup(id).then(function(model) {
+
+    showPost: function(slug) {
       app.Collections.Posts.propLookup('slug', slug).then(function(model) {
         var postView = new app.Views.Post({
           model: model
         });
-
-        //var post = new app.Views.Post(app.Collections.Posts.get(id));
         app.mainView.render(postView);
       });
+    },
 
+    editPost: function(id) {
+      console.log('editPost');
+      app.Collections.Posts.idLookup(id).then(function(model) {
+        var postView = new app.Views.Post({
+          model: model
+        });
+        app.mainView.render(postView);
+      });
     }
 
     // // fired before every route.

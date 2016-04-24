@@ -4,9 +4,9 @@
 
   app.Views.PostsList = Backbone.View.extend({
 
-    className: 'postsList',
+    className: 'postsList table-striped table-condensed table-responsive',
 
-    tagName: 'ul',
+    tagName: 'table',
 
     title: 'Posts list',
 
@@ -17,19 +17,27 @@
       this.listenTo(app.Collections.Posts, 'sync', this.render);
 
       app.Collections.Posts.fetch({
-      success: function(collection, response, options) {
-        self.render();
-      },
-      error: function(err) {
-        console.log('error callback : ' + err);
-      }
-    });
+        success: function(collection, response, options) {
+          self.render();
+        },
+        error: function(err) {
+          console.log('error callback : ' + err);
+        }
+      });
 
     },
 
     render: function() {
 
       var $list = this.$el.empty();
+      var $header = $('<tr/>');
+
+      $('<th/>').appendTo($header);
+      $('<th/>').html('Title').appendTo($header);
+      $('<th/>').html('Date').appendTo($header);
+      $('<th/>').appendTo($header);
+
+      $list.append($header);
 
       app.Collections.Posts.each(function(model) {
 

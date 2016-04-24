@@ -8,7 +8,8 @@
     template: _.template(JST.postPreview),
 
     events: {
-      'click .destroy': 'clear'
+      'click .destroy': 'clear',
+      'click .edit': 'edit'
     },
 
     initialize: function() {
@@ -18,7 +19,7 @@
     },
 
     render: function() {
-      this.model.set('dateFormat', new Date(this.model.get('date')));
+      this.model.set('dateFormat', app.Helpers.formatLocalDate(new Date(this.model.get('date'))));
       this.setElement(this.template(this.model.toJSON()));
 
       return this;
@@ -29,6 +30,7 @@
     clear: function() {
       this.model.destroy();
     }
+
 
   });
 

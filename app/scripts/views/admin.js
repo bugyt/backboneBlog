@@ -6,7 +6,7 @@
 
     template: _.template(JST.admin),
 
-    subViews: ['PostForm', 'PostsList'],
+    subViews: ['PostsList', 'PostForm'],
 
     title: 'Administration',
 

@@ -91,34 +91,17 @@ body {
   }
 }
 
-.postsList li .destroy {
-  display: none;
+.postsList li .btn-group {
   position: absolute;
   top: 0;
   right: 10px;
-  width: 40px;
-  height: 40px;
-  margin: auto 0;
-  font-size: 30px;
-  color: #cc9a9a;
-  margin-bottom: 11px;
-  transition: color 0.2s ease-out;
 }
 
-.postsList li .destroy:hover {
-  color: #af5b5e;
-}
 
 .postsList li {
     position: relative;
 }
-.postsList li .destroy:after {
-  content: '×';
-}
 
-.postsList li:hover .destroy {
-  display: block;
-}
 
 #main {
   background: #fff;
@@ -155,4 +138,13 @@ body {
 
 form {
   padding: 10px;
+}
+
+.tab-pane {
+  border: 1px solid #ddd;
+  border-top: none;
+}
+
+table {
+  width: 100%;
 }

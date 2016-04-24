@@ -100,8 +100,8 @@ app.Helpers = {
 
   generateTabs: function(viewsList) {
 
-    var tabs = $('<div/>').addClass('tab-content');
-    var navTabs = $('<ul/>').addClass('nav nav-tabs').attr('role', 'tablist');
+    let tabs = $('<div/>').addClass('tab-content');
+    var navTabs = $('<ul/>').addClass('nav nav-tabs nav-justified').attr('role', 'tablist');
     var errMsg;
 
     var valid = viewsList.every(function(element) {
@@ -115,6 +115,8 @@ app.Helpers = {
 
       var li = $('<li/>').attr('role', 'presentation')
         .appendTo(navTabs).addClass(function() {
+          console.log('--');
+          console.log(this);
           if ($(this).is(':first-child')) {
             return 'active';
           }
@@ -140,11 +142,58 @@ app.Helpers = {
         })
         .append(subView.render().$el);
 
-        return true;
+      return true;
 
     });
-
     return (valid) ? $('<div/>').append(navTabs).append(tabs) : errMsg;
+  },
+
+  formatLocalDate: function(now) {
+    //var now = new Date();
+    var tzo = -now.getTimezoneOffset();
+    var dif = tzo >= 0 ? '+' : '-';
+    var pad = function(num) {
+      var norm = Math.abs(Math.floor(num));
+      return (norm < 10 ? '0' : '') + norm;
+    };
+    return now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) +
+      ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds()); //+ dif + pad(tzo / 60) + ':' + pad(tzo % 60);
+  },
+
+  notifyMe: function(text) {
+
+    var notification;
+    // Voyons si le navigateur supporte les notifications
+    if (!('Notification' in window)) {
+      console.log('Ce navigateur ne supporte pas les notifications desktop');
+    }
+
+    // Voyons si l'utilisateur est OK pour recevoir des notifications
+    else if (Notification.permission === 'granted') {
+      // Si c'est ok, créons une notification
+      notification = new Notification(text);
+    }
+
+    // Sinon, nous avons besoin de la permission de l'utilisateur
+    // Note : Chrome n'implémente pas la propriété statique permission
+    // Donc, nous devons vérifier s'il n'y a pas 'denied' à la place de 'default'
+    else if (Notification.permission !== 'denied') {
+      Notification.requestPermission(function(permission) {
+
+        // Quelque soit la réponse de l'utilisateur, nous nous assurons de stocker cette information
+        if (!('permission' in Notification)) {
+          Notification.permission = permission;
+        }
+
+        // Si l'utilisateur est OK, on crée une notification
+        if (permission === 'granted') {
+          notification = new Notification(text);
+        }
+      });
+    }
+
+    // Comme ça, si l'utlisateur a refusé toute notification, et que vous respectez ce choix,
+    // il n'y a pas besoin de l'ennuyer à nouveau.
   }
 
 
