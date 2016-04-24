@@ -49,7 +49,7 @@
 
       if (!$('.form-horizontal').length) {
         var postForm = new app.Views.PostForm();
-        $(postForm.render().$el).insertAfter(this.$el);
+        $(postForm.$el).insertAfter(this.$el);
       }
 
       return this;

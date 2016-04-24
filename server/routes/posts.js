@@ -1,3 +1,4 @@
+/*eslint no-underscore-dangle: 0*/
 'use strict';
 
 var mongo = require('mongodb');
@@ -130,8 +131,10 @@ exports.deletePost = function(req, res) {
 /////////////////
 exports.updatePost = function(req, res) {
   console.log(limit);
-  var id = req.params.id;
+  var id = req.params._id;
   var post = req.body;
+  //post._id = new BSON.ObjectID(id);
+  delete (post._id);
   console.log('Updating post: ' + id);
   console.log(JSON.stringify(post));
   db.collection('posts', function(errColl, collection) {

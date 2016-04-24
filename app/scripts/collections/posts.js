@@ -7,7 +7,7 @@
     model: app.Models.Post,
     url: 'http://163.172.131.193:3000/posts',
     comparator: function(model) {
-      return -model.get('date');
+      return -model.get('dateCreated');
     }
 
 

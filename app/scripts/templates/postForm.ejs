@@ -3,7 +3,7 @@
   <div class="form-group has-feedback">
     <label class="col-sm-2 control-label" for="title">Title</label>
     <div class="col-sm-10" >
-      <input class="form-control" id="title" type="text" placeholder="Enter your title here"  maxlength="50" pattern=".{3,}" required>
+    <input class="form-control" id="title" type="text" placeholder="Enter your title here"  maxlength="50" pattern=".{3,}" value="<%= title %>" required></input>
       <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
       <span class="help-block text-right">Title of the post with min. 3 and max. 50 characters.</span>
     </div>
@@ -11,8 +11,8 @@
   <div class="form-group has-feedback slug">
     <label class="col-sm-2 control-label" for="slug">Slug</label>
     <div class="col-sm-10" >
-      <label class="pull-left"></label>
-      <input class="clickedit form-control input-sm" type="text" maxlength="50" hidden required>
+      <label class="pull-left"><%= slug %></label>
+      <input class="clickedit form-control input-sm" type="text" maxlength="50" value="<%= slug %>" hidden required>
       <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
       <div class="clearfix"></div>
     </div>
@@ -21,7 +21,7 @@
   <div class="form-group has-feedback">
     <label for="content" class="col-sm-2 control-label">Content</label>
     <div class="col-sm-10">
-      <textarea  class="form-control" rows="5" id="content" type="text" pattern=".{10,11}" required></textarea>
+      <textarea  class="form-control" rows="5" id="content" type="text" pattern=".{10,11}" required><%= content %></textarea>
       <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
       <span class="help-block pull-right">Enter content for your post.</span>
     </div>

@@ -19,7 +19,7 @@
     },
 
     render: function() {
-      this.model.set('dateFormat', app.Helpers.formatLocalDate(new Date(this.model.get('date'))));
+      this.model.set('dateFormat', app.Helpers.formatLocalDate(new Date(this.model.get('dateCreated'))));
       this.setElement(this.template(this.model.toJSON()));
 
       return this;
@@ -28,6 +28,7 @@
 
     // Remove the item, destroy the model from *localStorage* and delete its view.
     clear: function() {
+      console.log(this.model);
       this.model.destroy();
     }
 

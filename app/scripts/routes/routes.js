@@ -6,7 +6,7 @@
 
     routes: {
       '': 'home',
-      'admin': 'admin',
+      'admin(/:subView)': 'admin',
       'post/:slug': 'showPost',
       'post/edit/:id': 'editPost'
     },
@@ -15,8 +15,11 @@
       this.listenTo(this, 'route', this.change);
     },
 
-    admin: function() {
-      var AdminView = new app.Views.Admin();
+    admin: function(subView) {
+      subView = subView || 'PostsList';
+      var AdminView = new app.Views.Admin({
+        subView: subView
+      });
       app.mainView.render(AdminView);
     },
 
@@ -37,10 +40,12 @@
     editPost: function(id) {
       console.log('editPost');
       app.Collections.Posts.idLookup(id).then(function(model) {
-        var postView = new app.Views.Post({
-          model: model
+        var AdminView = new app.Views.Admin({
+          model: model,
+          subView: 'PostForm'
         });
-        app.mainView.render(postView);
+        app.mainView.render(AdminView);
+
       });
     }
 

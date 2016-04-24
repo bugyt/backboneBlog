@@ -1,5 +1,5 @@
 'use strict';
-
+var log = console.log.bind(console);
 var app = {
   Models: {},
   Collections: {},
@@ -16,7 +16,7 @@ var app = {
 window.onerror = function(error) {
   alert(error);
 };
-
+log('test');
 $(function() {
   marked.setOptions({
     highlight: function(code) {

@@ -10,7 +10,6 @@ app.Helpers = {
       if (this.currentView !== null && this.currentView.cid !== view.cid) {
         this.currentView.remove();
       }
-      console.log(view);
       this.currentView = view;
       return view;
     }
@@ -83,7 +82,6 @@ app.Helpers = {
     form.find('.clickedit').hide()
       .focusout(endEdit)
       .keyup(function(e) {
-        console.log('rhoooo');
         if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
 
           endEdit(e);
@@ -98,7 +96,9 @@ app.Helpers = {
       });
   },
 
-  generateTabs: function(viewsList) {
+  generateNavTabs: function(viewsList, options) {
+
+    options = options || {};
 
     let tabs = $('<div/>').addClass('tab-content');
     var navTabs = $('<ul/>').addClass('nav nav-tabs nav-justified').attr('role', 'tablist');
@@ -107,7 +107,7 @@ app.Helpers = {
     var valid = viewsList.every(function(element) {
 
       try {
-        var subView = new app.Views[element]();
+        var subView = new app.Views[element](options);
       } catch (err) {
         errMsg = $('<div/>').html('<p>Error on subview' + err + '</p>');
         return false;
@@ -115,9 +115,7 @@ app.Helpers = {
 
       var li = $('<li/>').attr('role', 'presentation')
         .appendTo(navTabs).addClass(function() {
-          console.log('--');
-          console.log(this);
-          if ($(this).is(':first-child')) {
+          if ((options.active && options.active === element) || !options.active && $(this).is(':first-child')) {
             return 'active';
           }
         });
@@ -126,6 +124,7 @@ app.Helpers = {
         .attr('data-toggle', 'tab')
         .attr('role', 'tab')
         .attr('href', '#' + element)
+        .attr('data-url', '#/admin')
         .text(subView.title).click(function(e) {
           e.preventDefault();
           $(this).tab('show');
@@ -136,11 +135,11 @@ app.Helpers = {
         .attr('role', 'tabpanel')
         .attr('id', element)
         .appendTo(tabs).addClass(function() {
-          if ($(this).is(':first-child')) {
+          if ((options.active && options.active === element) || !options.active && $(this).is(':first-child')) {
             return 'active';
           }
         })
-        .append(subView.render().$el);
+        .append(subView.$el);
 
       return true;
 
@@ -150,8 +149,8 @@ app.Helpers = {
 
   formatLocalDate: function(now) {
     //var now = new Date();
-    var tzo = -now.getTimezoneOffset();
-    var dif = tzo >= 0 ? '+' : '-';
+    //var tzo = -now.getTimezoneOffset();
+    //var dif = tzo >= 0 ? '+' : '-';
     var pad = function(num) {
       var norm = Math.abs(Math.floor(num));
       return (norm < 10 ? '0' : '') + norm;
