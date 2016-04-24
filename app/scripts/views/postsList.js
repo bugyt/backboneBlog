@@ -14,11 +14,9 @@
 
       var self = this;
 
-      this.listenTo(app.Collections.Posts, 'sync', this.render);
-
       app.Collections.Posts.fetch({
-        success: function(collection, response, options) {
-          self.render();
+        success: function(collection) {
+          self.listenTo(collection, 'sync', self.render);
         },
         error: function(err) {
           console.log('error callback : ' + err);
@@ -29,7 +27,7 @@
 
     render: function() {
 
-      var $list = this.$el.empty();
+      var $table = this.$el.html('');
       var $header = $('<tr/>');
 
       $('<th/>').appendTo($header);
@@ -37,7 +35,7 @@
       $('<th/>').html('Date').appendTo($header);
       $('<th/>').appendTo($header);
 
-      $list.append($header);
+      $table.append($header);
 
       app.Collections.Posts.each(function(model) {
 
@@ -45,12 +43,15 @@
           model: model
         });
 
-        $list.append(item.$el);
+        $table.append(item.$el);
 
       });
 
-      // var postForm = new app.Views.PostForm();
-      // this.$el.append(postForm.render().$el);
+      if (!$('.form-horizontal').length) {
+        var postForm = new app.Views.PostForm();
+        $(postForm.render().$el).insertAfter(this.$el);
+      }
+
       return this;
     }
   });

@@ -29,7 +29,6 @@
      },
 
      newAttributes: function() {
-       console.log('eeeee' + this.$('.slug input').val());
        return {
 
          title: this.$('#title').val().trim(),
@@ -44,7 +43,10 @@
        if (!this.validPost()) {
          return;
        }
-       app.Collections.Posts.create(this.newAttributes(), {
+
+      this.model = (!this.model) ? new app.Models.Post(this.newAttributes()) : this.model.set(this.newAttributes());
+
+       app.Collections.Posts.create(this.model, {
          wait: true,
          success: function(model, res) {
            console.log('success callback ' + res.insertedIds[0]);
@@ -79,9 +81,7 @@
        var target = $(e.target);
        var text = app.Helpers.slugify(target.val());
        this.$('.slug label:not(.control-label)').text(text);
-       console.log(this.$('.slug input'));
        this.$('.slug input').val(text);
-       console.log(this.$('.slug input').val());
      }
 
    });
