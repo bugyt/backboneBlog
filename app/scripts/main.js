@@ -28,6 +28,7 @@ $(function() {
     window.onerror = function(error) {
       alert(error);
     };
+    console.log('what');
     app.mainView = app.mainView || new app.Views.App();
     app.postController = app.postController || new app.Controllers.Posts();
     app.mainRouter = app.mainRouter || new app.Routers();
