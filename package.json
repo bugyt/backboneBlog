@@ -37,8 +37,12 @@
       "jquery": true,
       "browser": true
     },
+    "ecmaFeatures": {
+        "modules": true
+    },
     "globals": {
       "Backbone": true,
+      "Marionette": true,
       "JST": true,
       "_": true,
       "app": true,
