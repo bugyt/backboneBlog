@@ -42,7 +42,7 @@
     },
     "globals": {
       "Backbone": true,
-      "Marionette": true,
+      "Mn": true,
       "JST": true,
       "_": true,
       "app": true,
@@ -50,6 +50,7 @@
       "marked": true
     },
     "rules": {
+      "no-underscore-dangle": 1,
       "no-alert": 1,
       "eol-last": 0,
       "no-unused-vars": 1,

@@ -2,37 +2,20 @@
 
 (function() {
 
-  app.Views.Admin = Backbone.View.extend({
+  app.Views.Admin = Mn.LayoutView.extend({
 
     template: _.template(JST.admin),
 
-    subViews: ['PostsList', 'PostForm'],
-
-    subView: '',
-
-    title: 'Administration',
-
-    events: {
-      'click .nav-tabs a': 'navigateTab'
+    regions: {
+      main: '#tab'
     },
 
-    initialize: function(options) {
-      console.log(options);
-      this.content = app.Helpers.generateNavTabs(this.subViews, {
-        active: options.subView,
-        model: options.model
-      });
-      this.render();
+    childEvents: {
+      'render:end': 'switchTab'
     },
 
-    render: function() {
-      this.setElement(this.content);
-      return this;
-    },
-
-    navigateTab: function(e) {
-      var target = $(e.currentTarget);
-      app.mainRouter.navigate(target.data('url'), {trigger: false});
+    switchTab: function(child) {
+      this.$('#' + child.name).addClass('active').siblings().removeClass('active');
     }
 
   });

@@ -2,7 +2,7 @@
 
 (function() {
 
-  app.Views.App = Backbone.View.extend({
+  app.Views.App = Mn.LayoutView.extend({
 
     el: '#app',
 
@@ -10,14 +10,11 @@
       'click .nav li': 'navActive'
     },
 
-    initialize: function() {
-
-    },
-
-    render: function(subView) {
-      this.$('#main').html(app.Helpers.ViewManager.showView(subView).$el);
-      this.$('#main').prepend('<h2>' + subView.title + '</h2>');
-      //app.Helpers.notifyMe(subView.title);
+    regions: {
+      main: {
+        el: '#main',
+        currentView: ''
+      },
     },
 
     navActive: function(e) {

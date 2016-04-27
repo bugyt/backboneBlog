@@ -2,51 +2,58 @@
 
 (function() {
 
-  app.Routers = Backbone.Router.extend({
+  var Router = Mn.AppRouter.extend({
+    controller: app.postsController,
+
+    appRoutes: {
+      'post/:slug': 'showPost'
+
+    },
 
     routes: {
       '': 'home',
-      'admin(/:subView)': 'admin',
-      'post/:slug': 'showPost',
-      'post/edit/:id': 'editPost'
+      'admin(/:section)(/:subsection)(/:id)': 'admin',
+      'post/:slug': 'showPost'
     },
 
-    initialize: function() {
-      this.listenTo(this, 'route', this.change);
-    },
+    // initialize: function() {
+    //   this.listenTo(this, 'route', this.change);
+    // },
 
-    admin: function(subView) {
-      subView = subView || 'PostsList';
-      var AdminView = new app.Views.Admin({
-        subView: subView
-      });
-      app.mainView.render(AdminView);
+    admin: function(section, subsection, id) {
+      console.log('routing to admin');
+
+      if (!app.adminView || app.adminView.isDestroyed) {
+        console.log('adminView doesn\'t exist');
+        app.adminView = new app.Views.Admin();
+      }
+
+      app.mainView.showChildView('main', app.adminView);
+
+      var route = section + '/' + subsection;
+      route = route.toLowerCase();
+      switch (route) {
+        case 'posts/list':
+          app.adminView.showChildView('main', new app.Views.PostsList());
+          break;
+        case 'posts/edit':
+          if (!id) {
+            app.adminView.showChildView('main', new app.Views.PostForm());
+          } else {
+            app.postsController.editPost(id);
+          }
+          break;
+        default:
+          app.adminView.showChildView('main', new app.Views.PostsList());
+      }
+
     },
 
     home: function() {
+
       var postsList = new app.Views.PostsList();
-      app.mainView.render(postsList);
-    },
+      app.mainView.showChildView('main', postsList);
 
-    showPost: function(slug) {
-      app.Collections.Posts.propLookup('slug', slug).then(function(model) {
-        var postView = new app.Views.Post({
-          model: model
-        });
-        app.mainView.render(postView);
-      });
-    },
-
-    editPost: function(id) {
-      console.log('editPost');
-      app.Collections.Posts.idLookup(id).then(function(model) {
-        var AdminView = new app.Views.Admin({
-          model: model,
-          subView: 'PostForm'
-        });
-        app.mainView.render(AdminView);
-
-      });
     }
 
     // // fired before every route.
@@ -61,5 +68,7 @@
 
 
   });
+
+  app.router = new Router();
 
 })();

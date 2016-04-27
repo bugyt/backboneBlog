@@ -1,43 +1,16 @@
 /*eslint no-underscore-dangle: 0*/
 'use strict';
 
-var mongo = require('mongodb');
-var limit = '\r\n------------------------------\r\n';
-var Server = mongo.Server;
-var Db = mongo.Db;
-var db;
-
-var BSON = require('bson').BSONPure;
-var server = new Server('localhost', 27017, {
-  auto_reconnect: true // eslint-disable-line camelcase
-});
-
-db = new Db('blog', server);
-
-////////////////////////
-// MongoDb connection //
-////////////////////////
-db.open(function(err) {
-  console.log(limit);
-  if (!err) {
-    console.log('Connected to blog database');
-    db.collection('posts', {
-      strict: true
-    }, function(errColl) {
-      if (errColl) {
-        console.log('The posts collection doesn\'t exist. Creating it with sample data...');
-      }
-    });
-  }
-});
+var connect = require('../lib/connect');
+var lib = require('../lib/functions');
 
 //////////////////////
 // Return all posts //
 //////////////////////
 exports.findAll = function(req, res) {
-  console.log(limit);
+  console.log(connect.limit);
   console.log('Finding all posts...');
-  db.collection('posts', function(errColl, collection) {
+  connect.db.collection('posts', function(errColl, collection) {
     if (errColl) {
       console.log(errColl);
       res.send({
@@ -62,20 +35,19 @@ exports.findAll = function(req, res) {
 // Add a post //
 ////////////////
 exports.addPost = function(req, res) {
-  console.log(limit);
+  console.log(connect.limit);
   var post = req.body;
   console.log('Adding post: ' + JSON.stringify(post));
-  db.collection('posts', function(errColl, collection) {
+  connect.db.collection('posts', function(errColl, collection) {
     if (errColl) {
       console.log(errColl);
       res.send({
         'error': 'An error has occurred' + errColl
       });
     } else {
-      uniqueProp(collection, 'slug', post.slug)
+      lib.uniqueProp(collection, 'slug', post.slug)
         .then(function(resolve) {
           post.slug = resolve;
-          console.log(resolve);
           collection.insert(post, {
             safe: true
           }, function(err, result) {
@@ -85,7 +57,7 @@ exports.addPost = function(req, res) {
               });
             } else {
               console.log('Success: ' + JSON.stringify(result));
-              res.send(result);
+              res.send(result.ops[0]);
             }
           });
         }).catch(function(reject) {
@@ -101,15 +73,15 @@ exports.addPost = function(req, res) {
 // Delete post //
 /////////////////
 exports.deletePost = function(req, res) {
-  console.log(limit);
+  console.log(connect.limit);
   var id = req.params.id;
   console.log('Deleting post...: ' + id);
-  db.collection('posts', function(errColl, collection) {
+  connect.db.collection('posts', function(errColl, collection) {
     if (errColl) {
       console.log(errColl);
     } else {
       collection.remove({
-        '_id': new BSON.ObjectID(id)
+        '_id': new connect.BSON.ObjectID(id)
       }, {
         safe: true
       }, function(err, result) {
@@ -130,16 +102,16 @@ exports.deletePost = function(req, res) {
 // Update post //
 /////////////////
 exports.updatePost = function(req, res) {
-  console.log(limit);
+  console.log(connect.limit);
   var id = req.params._id;
   var post = req.body;
   //post._id = new BSON.ObjectID(id);
   delete (post._id);
   console.log('Updating post: ' + id);
   console.log(JSON.stringify(post));
-  db.collection('posts', function(errColl, collection) {
+  connect.db.collection('posts', function(errColl, collection) {
     collection.update({
-      '_id': new BSON.ObjectID(id)
+      '_id': new connect.BSON.ObjectID(id)
     }, post, {
       safe: true
     }, function(err, result) {
@@ -161,15 +133,15 @@ exports.updatePost = function(req, res) {
 //////////////////////////////
 exports.findById = function(req, res) {
 
-  console.log(limit);
+  console.log(connect.limit);
 
   var id = req.params.id;
 
   console.log('Retrieving post: ' + id);
 
-  db.collection('posts', function(errColl, collection) {
+  connect.db.collection('posts', function(errColl, collection) {
     collection.findOne({
-      '_id': new BSON.ObjectID(id)
+      '_id': new connect.BSON.ObjectID(id)
     }, function(err, item) {
       if (err) {
         console.log('Error finding post by id: ' + err);
@@ -195,7 +167,7 @@ exports.findByProp = function(req, res) {
 
   console.log('Retrieving post by prop: ' + prop + ' = ' + value);
 
-  db.collection('posts', function(errColl, collection) {
+  connect.db.collection('posts', function(errColl, collection) {
     collection.findOne({
       [prop]: value
     }, function(err, item) {
@@ -212,33 +184,3 @@ exports.findByProp = function(req, res) {
   });
 };
 
-///////////////////////////////////////////////////////////////////////
-// Check if a property is unique, if not the property is incremented //
-///////////////////////////////////////////////////////////////////////
-var uniqueProp = function(collection, prop, value) {
-  return new Promise(function(resolve, reject) {
-    collection.find({
-      [prop]: {
-        $regex: value
-      }
-    }).toArray(function(err, items) {
-      if (err) {
-        reject({
-          'error': 'An error has occurred'
-        });
-      } else {
-        var ii = 1;
-        var tmp = value;
-        var findItem = function(item) {
-          return item[prop] === this;
-        };
-        while (items.find(findItem, tmp)) {
-          tmp = value + ii.toString();
-          ii++;
-        }
-        value = tmp;
-        resolve(value);
-      }
-    });
-  });
-};

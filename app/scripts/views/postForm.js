@@ -2,11 +2,16 @@
 
  (function() {
 
-   app.Views.PostForm = Backbone.View.extend({
+   app.Views.PostForm = Mn.ItemView.extend({
 
      template: _.template(JST.postForm),
-
+     tagName: 'form',
+     className: 'form-horizontal',
+     attributes: {
+       role: 'form'
+     },
      title: 'Add a post',
+     name: 'postform',
 
      events: {
        'click button[type="submit"]': 'createPost',
@@ -17,22 +22,32 @@
      },
 
      initialize: function() {
-       this.render();
+       this.model = this.model || new app.Models.Post();
+       this.listenTo(this.model, 'sync', this.render);
+
+       // _.bindAll(this.model, 'change', 'render');
+       //_.bindAll(this.model, 'sync', 'render');
      },
 
      render: function() {
-       console.log('app.Views.PostForm.render');
-       this.edit = (this.model !== undefined);
+       console.log("postform render");
 
-       this.model = this.model || new app.Models.Post();
-       var html = this.template(this.model.toJSON());
-       this.setElement(html);
-       if (!this.edit) {
-         app.Helpers.editableLabel(this.$el);
+       if (this.model.id === undefined) {
+
+         this.title = 'Add a post';
+         this.$('button[type="submit"]').html('Add');
+
        } else {
-         this.$('input.clickedit').hide();
+
+         this.title = 'Update a post';
+         this.$('button[type="submit"]').html('Update');
        }
+       var html = this.template(this.model.toJSON());
+       //this.setElement(html);
+       this.$el.html(html);
+       app.Helpers.editableLabel(this.$el);
        this.validPost();
+       this.triggerMethod('render:end', 'form');
        return this;
      },
 
@@ -59,73 +74,29 @@
        e.preventDefault();
        if (!this.validPost()) {
          return;
-       }
-
-       if (!this.edit) {
-         this.model.set(this.newAttributes());
        } else {
-         this.model.set(this.editAttributes());
-       }
-
-   //    if (!this.edit) {
-        let self = this;
-        console.log('add');
-         app.Collections.Posts.create(this.model, {
-           wait: true,
-           success: function(model, res) {
-             console.log('success callback ' + res.insertedIds[0]);
-             console.log(res);
-             model.set({
-               _id: res.insertedIds[0]
-             });
-             $.notify('Success ! Post added.', {
-               className: 'success',
-               style: 'bootstrap'
-             });
-             self.clear();
-           },
-           error: function(err) {
-             console.log('error callback : ' + err);
-           }
+         if (this.model._id !== null) {
+           this.model.set(this.newAttributes());
+         } else {
+           this.model.set(this.editAttributes());
+         }
+         var self = this;
+         app.postsController.createPost(this.model).then(function() {
+           console.log('then');
+           console.log(self.model.get('_id'));
          });
-       // } else {
-       //   console.log('save');
-       //   console.log(this.model.get('_id'));
-       //   this.model.save({}, {
-       //     success: function(model, res) {
-       //       console.log('success callback ' + res.insertedIds[0]);
-       //       $.notify('Success ! Post edited.', {
-       //         className: 'success',
-       //         style: 'bootstrap'
-       //       });
-       //     },
-       //     error: function(err) {
-       //       console.log('error callback : ' + err);
-       //     }
-       //   });
-       //   // this.model.save({}, {
-       //   //   success: function(model, res) {
-       //   //     console.log('success callback ' + res.insertedIds[0]);
-       //   //   },
-       //   //   error: function(err) {
-       //   //     console.log('error callback : ' + err);
-       //   //   }
-       //   // });
-       // }
-
+       }
 
      },
 
      validPost: function() {
-
        return app.Helpers.formValid(this.$el);
-
      },
 
-     clear: function() {
-       this.$el.find('input[type=text], textarea').val('');
-       this.$('.slug label:not(.control-label)').text('');
-       this.validPost();
+     clear: function(e) {
+       //  e.preventDefault();
+       this.model = this.initModel;
+       this.render();
      },
 
      convertToSlug: function(e) {

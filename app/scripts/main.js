@@ -1,38 +1,39 @@
 'use strict';
 
-var App = Marionette.Application.extend({
+var Application = Mn.Application.extend({
   Models: {},
-  Collections: {},
   Views: {},
-  Routers: {},
-  Controllers: {},
-  Helpers: {}
+  Helpers: {},
+  Data: {}
 });
 
-Marionette.Application.prototype.Models = {};
-Marionette.Application.prototype.Collections = {};
-Marionette.Application.prototype.Views = {};
-Marionette.Application.prototype.Routers = {};
-Marionette.Application.prototype.Controllers = {};
-Marionette.Application.prototype.Helpers = {};
+var app = new Application();
 
-var app = new Marionette.Application();
+app.on('start', function() {
+
+  marked.setOptions({
+    highlight: function(code) {
+      return hljs.highlightAuto(code).value;
+    }
+  });
+
+  window.onerror = function(error) {
+    alert(error);
+  };
+
+
+  app.Data.Posts.fetch().then(function() {
+
+    app.mainView = app.mainView || new app.Views.App();
+    Backbone.history.start();
+
+  }).fail(function(err) {
+    console.log('Error : ' + JSON.stringify(err));
+
+  });
+
+});
 
 $(function() {
-  app.on('start', function() {
-    marked.setOptions({
-      highlight: function(code) {
-        return hljs.highlightAuto(code).value;
-      }
-    });
-    window.onerror = function(error) {
-      alert(error);
-    };
-    console.log('what');
-    app.mainView = app.mainView || new app.Views.App();
-    app.postController = app.postController || new app.Controllers.Posts();
-    app.mainRouter = app.mainRouter || new app.Routers();
-    Backbone.history.start();
-  });
   app.start();
 });

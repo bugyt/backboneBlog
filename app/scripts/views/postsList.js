@@ -2,58 +2,30 @@
 
 (function() {
 
+  app.Views.PostsListItems = Mn.CollectionView.extend({
+    tagName: 'tbody',
+    name: 'postslist',
+    childView: app.Views.PostPreview
+  });
+
+
   app.Views.PostsList = Backbone.View.extend({
-
-    className: 'postsList table-striped table-condensed table-responsive',
-
+    template: _.template(JST.postsList),
     tagName: 'table',
-
-    title: 'Posts list',
-
+    className: 'postsList table-striped table-condensed table-responsive',
     initialize: function() {
-
-      var self = this;
-
-      app.Collections.Posts.fetch({
-        success: function(collection) {
-          self.listenTo(collection, 'sync', self.render);
-        },
-        error: function(err) {
-          console.log('error callback : ' + err);
-        }
-      });
-
+      this.listenTo(this.collection, 'sync', this.render);
     },
-
     render: function() {
-
-      var $table = this.$el.html('');
-      var $header = $('<tr/>');
-
-      $('<th/>').appendTo($header);
-      $('<th/>').html('Title').appendTo($header);
-      $('<th/>').html('Date').appendTo($header);
-      $('<th/>').appendTo($header);
-
-      $table.append($header);
-
-      app.Collections.Posts.each(function(model) {
-
-        var item = new app.Views.PostPreview({
-          model: model
-        });
-
-        $table.append(item.$el);
-
+      this.$el.html(this.template());
+      var postsListItems = new app.Views.PostsListItems({
+        collection: app.Data.Posts
       });
-
-      if (!$('.form-horizontal').length) {
-        var postForm = new app.Views.PostForm();
-        $(postForm.$el).insertAfter(this.$el);
-      }
-
-      return this;
+      this.$el.append(postsListItems.render().$el);
+      var postForm = new app.Views.PostForm();
+      this.$el.append(postForm.render().$el);
     }
   });
+
 
 })();

@@ -5,12 +5,8 @@
   Backbone.Collection.prototype.propLookup = function(prop, value) {
     var query = {};
     query[prop] = value;
-    console.log(this);
-    //var model = this.get(query);
-    //var model = this.find(function(modelRes) { return modelRes.get(prop) === value; });
     var model = this.findWhere(query);
     var deferred = new $.Deferred();
-
     if (model) {
       deferred.resolve(model);
     } else {
@@ -19,10 +15,13 @@
       model.fetch({
         success: function(fetchedModel) {
           deferred.resolve(fetchedModel);
+        },
+        error: function(err) {
+          console.log(err);
+          deferred.reject(err);
         }
       });
     }
-
     // Returning a Promise so that only this function can modify
     // the Deferred object
     return deferred.promise();

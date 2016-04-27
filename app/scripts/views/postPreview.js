@@ -2,28 +2,26 @@
 
 (function() {
 
-
   app.Views.PostPreview = Backbone.View.extend({
 
     template: _.template(JST.postPreview),
-
+    //el: 'tr',
+    tagName: 'tr',
     events: {
       'click .destroy': 'clear',
       'click .edit': 'edit'
     },
 
     initialize: function() {
-      this.listenTo(this.model, 'destroy', this.remove);
-      this.listenTo(this.model, 'sync', this.render);
-      this.render();
+      this.listenTo(this.model, 'change', this.render);
+      this.model.set('dateFormat', app.Helpers.formatLocalDate(new Date(this.model.get('dateCreated'))));
     },
 
     render: function() {
-      this.model.set('dateFormat', app.Helpers.formatLocalDate(new Date(this.model.get('dateCreated'))));
-      this.setElement(this.template(this.model.toJSON()));
-
-      return this;
-
+      this.$el.html(this.template(this.model.toJSON()));
+    },
+    test: function() {
+      console.log('change');
     },
 
     // Remove the item, destroy the model from *localStorage* and delete its view.

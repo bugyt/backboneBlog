@@ -38,7 +38,7 @@ gulp.task('scripts', ['templates'], () => {
 });
 
 gulp.task('templates', () => {
-  return gulp.src('app/scripts/templates/*.ejs')
+  return gulp.src('app/scripts/templates/*.html')
   .pipe($.htmlmin({
       collapseWhitespace: true
     }))
@@ -144,7 +144,7 @@ gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
 
   gulp.watch('app/styles/**/*.css', ['styles']);
   gulp.watch('app/scripts/**/*.js', ['scripts']);
-  gulp.watch('app/scripts/**/*.ejs', ['templates']);
+  gulp.watch('app/scripts/**/*.html', ['templates']);
   gulp.watch('app/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
