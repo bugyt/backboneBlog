@@ -30,7 +30,7 @@
      },
 
      render: function() {
-       console.log("postform render");
+       console.log('postform render');
 
        if (this.model.id === undefined) {
 

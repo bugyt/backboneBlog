@@ -7,7 +7,8 @@
     template: _.template(JST.admin),
 
     regions: {
-      main: '#tab'
+      main: '#top',
+      bottom: '#bottom'
     },
 
     childEvents: {

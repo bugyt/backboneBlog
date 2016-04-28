@@ -14,7 +14,10 @@
     tagName: 'table',
     className: 'postsList table-striped table-condensed table-responsive',
     initialize: function() {
-      this.listenTo(this.collection, 'sync', this.render);
+      app.Data.Posts.fetch().then(() => {
+        this.listenTo(this.collection, 'sync', this.render);
+      });
+
     },
     render: function() {
       this.$el.html(this.template());
@@ -22,8 +25,7 @@
         collection: app.Data.Posts
       });
       this.$el.append(postsListItems.render().$el);
-      var postForm = new app.Views.PostForm();
-      this.$el.append(postForm.render().$el);
+
     }
   });
 

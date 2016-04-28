@@ -3,17 +3,17 @@
 (function() {
   Backbone.Model.prototype.idAttribute = '_id';
 
-  app.Models.Post = Backbone.Model.extend({
+  app.Models.User = Backbone.Model.extend({
 
     defaults: {
-      _id: null,
-      title: '',
-      slug: '',
-      content: '',
-      dateCreated: '',
-      dateModified: ''
+      _id: null
+      // title: '',
+      // slug: '',
+      // content: '',
+      // dateCreated: '',
+      // dateModified: ''
     },
-    urlRoot: 'http://163.172.131.193:3000/posts',
+    urlRoot: 'http://163.172.131.193:3000/users',
 
     getByProperty: function(prop) {
       // "this" is now our Model instance declared from the router

@@ -10,8 +10,10 @@
     if (model) {
       deferred.resolve(model);
     } else {
+      console.log('pas trouvé');
       model = new app.Models.Post(query);
       model.getByProperty(prop);
+      console.log(JSON.stringify(model));
       model.fetch({
         success: function(fetchedModel) {
           deferred.resolve(fetchedModel);

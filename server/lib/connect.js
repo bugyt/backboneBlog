@@ -19,13 +19,13 @@ db = new Db('blog', server);
 db.open(function(err) {
   if (!err) {
     console.log('Connected to blog database');
-    db.collection('posts', {
-      strict: true
-    }, function(errColl) {
-      if (errColl) {
-        console.log('The posts collection doesn\'t exist. Creating it with sample data...');
-      }
-    });
+    // db.collection('posts', {
+    //   strict: true
+    // }, function(errColl) {
+    //   if (errColl) {
+    //     console.log('The posts collection doesn\'t exist. Creating it with sample data...');
+    //   }
+    // });
   }
 });
 

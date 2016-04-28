@@ -14,7 +14,7 @@
       main: {
         el: '#main',
         currentView: ''
-      },
+      }
     },
 
     navActive: function(e) {

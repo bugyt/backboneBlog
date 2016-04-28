@@ -34,9 +34,14 @@
       route = route.toLowerCase();
       switch (route) {
         case 'posts/list':
+
           app.adminView.showChildView('main', new app.Views.PostsList());
+          app.adminView.showChildView('bottom', new app.Views.PostForm());
+
+
           break;
         case 'posts/edit':
+          app.adminView.getRegion('bottom').reset();
           if (!id) {
             app.adminView.showChildView('main', new app.Views.PostForm());
           } else {
@@ -44,7 +49,10 @@
           }
           break;
         default:
+
           app.adminView.showChildView('main', new app.Views.PostsList());
+          app.adminView.showChildView('bottom', new app.Views.PostForm());
+
       }
 
     },
@@ -52,7 +60,9 @@
     home: function() {
 
       var postsList = new app.Views.PostsList();
+
       app.mainView.showChildView('main', postsList);
+
 
     }
 

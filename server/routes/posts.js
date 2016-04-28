@@ -106,25 +106,33 @@ exports.updatePost = function(req, res) {
   var id = req.params._id;
   var post = req.body;
   //post._id = new BSON.ObjectID(id);
-  delete (post._id);
+  delete(post._id);
   console.log('Updating post: ' + id);
   console.log(JSON.stringify(post));
   connect.db.collection('posts', function(errColl, collection) {
-    collection.update({
-      '_id': new connect.BSON.ObjectID(id)
-    }, post, {
-      safe: true
-    }, function(err, result) {
-      if (err) {
-        console.log('Error updating post: ' + err);
-        res.send({
-          'error': 'An error has occurred - ' + err
+    lib.uniqueProp(collection, 'slug', post.slug)
+      .then(function(resolve) {
+        post.slug = resolve;
+        collection.update({
+          '_id': new connect.BSON.ObjectID(id)
+        }, post, {
+          safe: true
+        }, function(err, result) {
+          if (err) {
+            console.log('Error updating post: ' + err);
+            res.send({
+              'error': 'An error has occurred - ' + err
+            });
+          } else {
+            console.log('' + result + ' document(s) updated');
+            res.send(post);
+          }
         });
-      } else {
-        console.log('' + result + ' document(s) updated');
-        res.send(post);
-      }
-    });
+      }).catch(function(reject) {
+        res.send({
+          'error': 'An error has occurred ' + JSON.stringify(reject)
+        });
+      });
   });
 };
 
@@ -162,6 +170,8 @@ exports.findById = function(req, res) {
 /////////////////////////////////////
 exports.findByProp = function(req, res) {
 
+  console.log(connect.limit);
+
   var prop = req.params.prop;
   var value = req.params.value;
 
@@ -183,4 +193,3 @@ exports.findByProp = function(req, res) {
     });
   });
 };
-
